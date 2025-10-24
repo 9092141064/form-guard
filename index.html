@@ -21,30 +21,12 @@
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
 
     <!-- Submit Button -->
-    <input type="submit" value="Submit">
+<button id="sendBtn">Send Now</button>
   </form>
 
   <!-- Clearout JS Widget -->
   <script id="clearout-js-widget" src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" async></script>
 
-  <!-- Custom Hook Script -->
-  <script>
-    // Wait until Clearout widget is loaded
-    window.addEventListener('load', function() {
-        if (window.Clearout) {
-            Clearout.setHooks({
-                on_before_verify: function({ email, $form }) {
-                    let response = { is_acceptable: true, error_msg: '' };
-
-                    // Block emails containing example.com
-                    if (email.includes('example.com')) {
-                        response.is_acceptable = false;
-                        response.error_msg = 'Emails from example.com are not allowed!';
-                    }
-
-                    return response;
-                }
-            });
         }
     });
   </script>
