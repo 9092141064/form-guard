@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Contact Form</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <h2>Contact Form</h2>
@@ -12,8 +13,8 @@
     <input type="text" id="name" name="name" required><br><br>
 
     <!-- Primary Email Field -->
-    <label for="text">Email:</label><br>
-    <input type="text" id="email" name="text" required><br><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
 
     <!-- Phone Number Field -->
     <label for="phone">Phone Number:</label><br>
@@ -25,5 +26,27 @@
 
   <!-- Clearout JS Widget -->
   <script id="clearout-js-widget" src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" async></script>
+
+  <!-- Custom Hook Script -->
+  <script>
+    // Wait until Clearout widget is loaded
+    window.addEventListener('load', function() {
+        if (window.Clearout) {
+            Clearout.setHooks({
+                on_before_verify: function({ email, $form }) {
+                    let response = { is_acceptable: true, error_msg: '' };
+
+                    // Block emails containing example.com
+                    if (email.includes('example.com')) {
+                        response.is_acceptable = false;
+                        response.error_msg = 'Emails from example.com are not allowed!';
+                    }
+
+                    return response;
+                }
+            });
+        }
+    });
+  </script>
 </body>
 </html>
