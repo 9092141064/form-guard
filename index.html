@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact Form</title>
+  <title>Contact Form with Clearout Validation</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <h2>Contact Form</h2>
 
+  <!-- Contact Form -->
   <form id="contact-form">
     <!-- Name Field -->
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" required><br><br>
 
-    <!-- Primary Email Field -->
+    <!-- Email Field -->
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br><br>
 
-    <!-- Phone Number Field -->
+    <!-- Phone Field -->
     <label for="phone">Phone Number:</label><br>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
 
     <!-- Submit Button -->
-<button id="sendBtn">Send Now</button>
+    <button type="submit">Submit</button>
   </form>
 
-  <!-- Clearout JS Widget -->
-  <script id="clearout-js-widget" src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" async></script>
+  <!-- ✅ Clearout Validation Script -->
+  <script 
+    id="clearout-js-widget" 
+    src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" 
+    async>
+  </script>
 
 </body>
 </html>
