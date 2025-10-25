@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact Form with Clearout Validation</title>
+  <title>Contact Form with reCAPTCHA v3</title>
 </head>
 <body>
   <h2>Contact Form</h2>
 
-  <form id="contact-form">
+  <!-- Form -->
+  <form id="contact-form" action="/submit" method="POST">
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" required><br><br>
 
@@ -16,11 +17,27 @@
     <label for="phone">Phone Number:</label><br>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
 
-    <button type="submit">Submit</button>
+    <!-- Submit Button with reCAPTCHA v3 -->
+    <button class="g-recaptcha"
+            data-sitekey="6LecdfYrAAAAAAe0UXNIgJwArwtzulpdKX6uxP-9"
+            data-callback='onSubmit'
+            data-action='submit'>
+      Submit
+    </button>
   </form>
 
-<script id="clearout-js-widget" src="https://clearout.io/jswidget/66ab216c17c2dffcfed16409f0957bbe" async></script>
+  <!-- Load Google reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js"></script>
 
+  <!-- Callback function -->
+  <script>
+    function onSubmit(token) {
+      // For now, show token in console
+      console.log("reCAPTCHA token:", token);
+
+      // Submit the form (or send token to backend)
+      document.getElementById("contact-form").submit();
+    }
+  </script>
 </body>
 </html>
-
