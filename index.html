@@ -1,36 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact Form with Clearout Validation</title>
+  <title>Contact Form with Clearout + Google reCAPTCHA v3</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <h2>Contact Form</h2>
 
-  <!-- Contact Form -->
   <form id="contact-form">
-    <!-- Name Field -->
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name" required><br><br>
 
-    <!-- Email Field -->
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br><br>
 
-    <!-- Phone Field -->
     <label for="phone">Phone Number:</label><br>
     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required><br><br>
 
-    <!-- Submit Button -->
-    <button type="text">Submit</button>
+    <button type="submit">Submit</button>
   </form>
 
-  <!-- ✅ Clearout Validation Script -->
+  <!-- Clearout Validation Script -->
   <script 
     id="clearout-js-widget" 
     src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" 
     async>
   </script>
 
+  <!-- Google reCAPTCHA v3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdB3PUrAAAAAH6J5mN9B9uf7qtmWQoE0FNcnURr"></script>
+
+  <script>
+    $('#contact-form').on('submit', function (event) {
+      event.preventDefault();
+
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LdB3PUrAAAAAH6J5mN9B9uf7qtmWQoE0FNcnURr', { action: 'submit' })
+          .then(function (token) {
+            // Send form data + reCAPTCHA token to backend
+            $.ajax({
+              url: 'http://localhost:3000/submit-form',
+              method: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({
+                name: $('#name').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                token: token
+              }),
+              success: function (response) {
+                if (response.verified) {
+                  alert('✅ Form submitted successfully and verified!');
+                } else {
+                  alert('❌ reCAPTCHA verification failed. Please try again.');
+                }
+              },
+              error: function () {
+                alert('⚠️ Error contacting the server.');
+              }
+            });
+          });
+      });
+    });
+  </script>
 </body>
 </html>
