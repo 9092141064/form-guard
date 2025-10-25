@@ -21,47 +21,8 @@
   </form>
 
   <!-- Clearout Validation Script -->
-  <script 
-    id="clearout-js-widget" 
-    src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" 
-    async>
-  </script>
+  <script id="clearout-js-widget" src="https://test.clearout.io/jswidget/9f09cf5dcaeb0de62f8a799360743b7a" async></script>
 
-  <!-- Google reCAPTCHA v3 -->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LdB3PUrAAAAAH6J5mN9B9uf7qtmWQoE0FNcnURr"></script>
-
-  <script>
-    $('#contact-form').on('submit', function (event) {
-      event.preventDefault();
-
-      grecaptcha.ready(function () {
-        grecaptcha.execute('6LdB3PUrAAAAAH6J5mN9B9uf7qtmWQoE0FNcnURr', { action: 'submit' })
-          .then(function (token) {
-            // Send form data + reCAPTCHA token to backend
-            $.ajax({
-              url: 'http://localhost:3000/submit-form',
-              method: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                name: $('#name').val(),
-                email: $('#email').val(),
-                phone: $('#phone').val(),
-                token: token
-              }),
-              success: function (response) {
-                if (response.verified) {
-                  alert('✅ Form submitted successfully and verified!');
-                } else {
-                  alert('❌ reCAPTCHA verification failed. Please try again.');
-                }
-              },
-              error: function () {
-                alert('⚠️ Error contacting the server.');
-              }
-            });
-          });
-      });
-    });
-  </script>
 </body>
 </html>
+
